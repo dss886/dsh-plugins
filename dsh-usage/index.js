@@ -1,4 +1,4 @@
-// dsh-usage — host half.
+// @dss886/dsh-usage — host half.
 //
 // Two data sources, one route, and neither needs a platform login token:
 //   1. Balance — the official `GET https://api.deepseek.com/user/balance`,
@@ -14,7 +14,7 @@ import { homedir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { zstdDecompressSync } from 'node:zlib'
 
-export const name = 'dsh-usage'
+export const name = 'dss886-dsh-usage'
 export const inject = ['webServer', 'credentials', 'timer']
 
 const BALANCE_URL = 'https://api.deepseek.com/user/balance'
@@ -45,19 +45,28 @@ const PRICES = {
 const LOW_BALANCE_THRESHOLD = 10
 
 /** Route namespace shared with `client.js` — keep the two files in step. */
-const ROUTE_USAGE = '/dsh-usage/api/usage'
+const ROUTE_USAGE = '/dss886-dsh-usage/api/usage'
 
 /**
- * Absolute path of a meter state file.
+ * Absolute paths of the meter state files, most current first.
  *
- * @param legacy - true for the pre-rename file name, which is read once and
- *   migrated so a rename does not reset the accumulated counters.
+ * The first entry is the file this version writes; the rest are pre-rename
+ * names. The first readable one is migrated forward, so renaming the package
+ * never resets counters that only grow.
+ *
+ * @returns the candidate state paths, current name first.
  */
-function statePath(legacy = false) {
+function statePaths() {
   const home = process.env.DSH_HOME && process.env.DSH_HOME.trim() !== ''
     ? process.env.DSH_HOME.trim()
     : join(homedir(), '.dsh')
-  return join(home, 'storages', legacy ? 'usage-meter.json' : 'dsh-usage-meter.json')
+  const names = [
+    'dss886-dsh-usage-meter.json',
+    'dss886-usage-meter.json',
+    'dsh-usage-meter.json',
+    'usage-meter.json',
+  ]
+  return names.map((name) => join(home, 'storages', name))
 }
 
 /**
@@ -449,8 +458,8 @@ export function apply(ctx) {
   let flushTimer = null
   let balanceCache = { at: 0, value: null }
 
-  const file = statePath()
-  const legacyFile = statePath(true)
+  const files = statePaths()
+  const file = files[0]
 
   function resetCaches() {
     balanceCache = { at: 0, value: null }
@@ -470,15 +479,13 @@ export function apply(ctx) {
     loadStarted = true
     loadPromise = (async () => {
       let stored = emptyState()
-      try {
-        stored = prune(normalizeState(JSON.parse(await readFile(file, 'utf8'))), Date.now())
-      } catch {
-        // The pre-rename file name is read exactly once, so renaming the plugin
-        // does not reset counters that only grow.
+      for (const candidate of files) {
         try {
-          stored = prune(normalizeState(JSON.parse(await readFile(legacyFile, 'utf8'))), Date.now())
+          stored = prune(normalizeState(JSON.parse(await readFile(candidate, 'utf8'))), Date.now())
+          break
         } catch {
-          // First run, or an unreadable/corrupt file: start from empty.
+          // Missing, or an unreadable/corrupt file: try the next name, so a
+          // rename never resets counters that only grow.
         }
       }
       state = mergeState(stored, pending)
@@ -572,7 +579,10 @@ export function apply(ctx) {
   }
 
   async function flush() {
-    if (!dirty) return
+    // Never persist the pre-load `emptyState()`: a `session/event` can dirty the
+    // meter before the first request runs `ensureLoaded()`, and a flush in that
+    // window would overwrite the on-disk counters with zeros.
+    if (!loaded || !dirty) return
     dirty = false
     try {
       await mkdir(dirname(file), { recursive: true })
@@ -580,7 +590,7 @@ export function apply(ctx) {
       await writeFile(tmp, JSON.stringify(state), 'utf8')
       await rename(tmp, file)
     } catch (error) {
-      ctx.logger?.warn?.('dsh-usage: could not persist usage meter: ' + String(error))
+      ctx.logger?.warn?.('dss886-dsh-usage: could not persist usage meter: ' + String(error))
     }
   }
 
@@ -728,11 +738,11 @@ export function apply(ctx) {
       }
       void flush()
     }
-  }, 'dsh-usage: meter')
+  }, 'dss886-dsh-usage: meter')
 
   ctx.effect(() => {
     return ctx.webServer.register({ kind: 'exact', path: ROUTE_USAGE, handler: handleUsage })
-  }, 'dsh-usage: routes')
+  }, 'dss886-dsh-usage: routes')
 }
 
 export const routes = { usage: ROUTE_USAGE }

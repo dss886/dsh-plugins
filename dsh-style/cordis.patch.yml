@@ -1,7 +1,7 @@
-# The dsh-style bundle layer: one Host row whose whole contribution is the
+# The @dss886/dsh-style bundle layer: one Host row whose whole contribution is the
 # client half declared in package.json (`dsh.client`). The transition itself is
 # a document-level stylesheet installed by client.js — see the tuning constants
 # at the top of that file.
 - insert:
-    - id: dsh-style
-      name: dsh-style
+    - id: dss886-dsh-style
+      name: '@dss886/dsh-style'

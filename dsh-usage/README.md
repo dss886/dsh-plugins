@@ -1,4 +1,4 @@
-# dsh-usage
+# @dss886/dsh-usage
 
 DeepSeek 用量卡片，挂在左侧边栏最底部、**设置按钮上方**（槽位 `sidebar.footer.action`）。
 卡片只有一行余额；点击后弹出一个浮窗显示更多信息。
@@ -53,7 +53,7 @@ DeepSeek 用量卡片，挂在左侧边栏最底部、**设置按钮上方**（�
 
 | 方法 | 路径 | 作用 |
 | --- | --- | --- |
-| `GET` | `/dsh-usage/api/usage?force=1` | 余额 + 本日/本月 Token 与命中率（含更多派生维度） |
+| `GET` | `/dss886-dsh-usage/api/usage?force=1` | 余额 + 本日/本月 Token 与命中率（含更多派生维度） |
 
 路由仅接受回环地址与同源请求（校验 `remoteAddress`、`Host`、`Origin`、
 `Sec-Fetch-Site`）。没有写入型路由，插件不接收任何凭据输入。
@@ -64,14 +64,14 @@ DeepSeek 用量卡片，挂在左侧边栏最底部、**设置按钮上方**（�
 
 | 选择器 | 控制的东西 |
 | --- | --- |
-| `.dsh-usage-card` | 卡片本体：边框、圆角、内边距、底色 |
-| `.dsh-usage-card:hover` | hover / 展开时的底色 |
-| `.dsh-usage-card-label` | 左侧标题（`余额` / `充值 / 赠送余额`） |
-| `.dsh-usage-card-value` | 右侧金额 |
-| `.dsh-usage-card[data-low='true']` | 低余额变红（标题与金额一起继承） |
-| `.dsh-usage-panel` | 浮窗表面：宽度、内边距、圆角、阴影、字号 |
-| `.dsh-usage-title` / `-rule` / `-details` | 浮窗内部：标题行、分隔线、两列明细 |
-| `.dsh-usage-rail-*` | 侧栏收起成 56px 轨道时的降级样式 |
+| `.dss886-dsh-usage-card` | 卡片本体：边框、圆角、内边距、底色 |
+| `.dss886-dsh-usage-card:hover` | hover / 展开时的底色 |
+| `.dss886-dsh-usage-card-label` | 左侧标题（`余额` / `充值 / 赠送余额`） |
+| `.dss886-dsh-usage-card-value` | 右侧金额 |
+| `.dss886-dsh-usage-card[data-low='true']` | 低余额变红（标题与金额一起继承） |
+| `.dss886-dsh-usage-panel` | 浮窗表面：宽度、内边距、圆角、阴影、字号 |
+| `.dss886-dsh-usage-title` / `-rule` / `-details` | 浮窗内部：标题行、分隔线、两列明细 |
+| `.dss886-dsh-usage-rail-*` | 侧栏收起成 56px 轨道时的降级样式 |
 
 两条约定让 CSS 与逻辑解耦：
 
@@ -83,7 +83,7 @@ DeepSeek 用量卡片，挂在左侧边栏最底部、**设置按钮上方**（�
 
 ## 状态文件
 
-`$DSH_HOME/storages/dsh-usage-meter.json`：按自然日分桶
+`$DSH_HOME/storages/dss886-dsh-usage-meter.json`：按自然日分桶
 （`hitOff/hitPeak/missOff/missPeak/outOff/outPeak/calls` + 每模型子桶），
 另有 `logs` 记录已回放日志的大小。保留 92 天，`version: 2`
 （v1 的 `i/c/o` 会按低谷价迁移）。

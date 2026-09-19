@@ -1,4 +1,4 @@
-// dsh-usage — client half.
+// dss886-dsh-usage — client half.
 //
 // `sidebar.footer.action` holds one balance card; clicking it opens the same
 // kind of trigger-anchored stat dialog the composer's turn/step pill uses
@@ -9,14 +9,14 @@
 // ── Editing the look ────────────────────────────────────────────────────────
 // Everything visual lives in STYLESHEET below, in reading order:
 //
-//   .dsh-usage-card                the trigger card (border, radius, padding)
-//   .dsh-usage-card:hover           hover / open affordance
-//   .dsh-usage-card-label           left column ("余额" or "充值 / 赠送余额")
-//   .dsh-usage-card-value           right column (the amount)
-//   .dsh-usage-card[data-low]       low-balance recolor (both columns inherit)
-//   .dsh-usage-panel                the popover surface
-//   .dsh-usage-title / -rule / -details   the popover's inner structure
-//   .dsh-usage-rail                 the 56px collapsed-sidebar token glyph
+//   .dss886-dsh-usage-card                the trigger card (border, radius, padding)
+//   .dss886-dsh-usage-card:hover           hover / open affordance
+//   .dss886-dsh-usage-card-label           left column ("余额" or "充值 / 赠送余额")
+//   .dss886-dsh-usage-card-value           right column (the amount)
+//   .dss886-dsh-usage-card[data-low]       low-balance recolor (both columns inherit)
+//   .dss886-dsh-usage-panel                the popover surface
+//   .dss886-dsh-usage-title / -rule / -details   the popover's inner structure
+//   .dss886-dsh-usage-rail                 the 56px collapsed-sidebar token glyph
 //
 // Two rules of the house style apply: colors are theme tokens from the host's
 // alias layer (`--dsw-alias-*`, which already carries both palettes) each with
@@ -25,7 +25,7 @@
 
 const STYLESHEET = `
 /* ── trigger card: the balance row sitting above the Settings row ────────── */
-.dsh-usage-card {
+.dss886-dsh-usage-card {
   display: flex;
   justify-content: space-between;
   gap: 8px;
@@ -46,12 +46,12 @@ const STYLESHEET = `
   user-select: none;
 }
 
-.dsh-usage-card:hover,
-.dsh-usage-card[aria-expanded='true'] {
+.dss886-dsh-usage-card:hover,
+.dss886-dsh-usage-card[aria-expanded='true'] {
   background: var(--dsw-alias-button-floating-hover);
 }
 
-.dsh-usage-card-label {
+.dss886-dsh-usage-card-label {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -60,25 +60,25 @@ const STYLESHEET = `
   gap: 6px;
 }
 
-.dsh-usage-card-label svg {
+.dss886-dsh-usage-card-label svg {
   width: 14px;
   height: 14px;
 }
 
-.dsh-usage-card-value {
+.dss886-dsh-usage-card-value {
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
 
 /* A balance under the low threshold recolors the amount (and the popover
    heading, which carries the same class). */
-.dsh-usage-card[data-low='true'] .dsh-usage-card-value,
-.dsh-usage-title-open[data-low='true'] {
+.dss886-dsh-usage-card[data-low='true'] .dss886-dsh-usage-card-value,
+.dss886-dsh-usage-title-open[data-low='true'] {
   color: var(--dsw-alias-state-error-primary);
 }
 
 /* ── collapsed sidebar (56px rail): the token-usage glyph ───────────────── */
-.dsh-usage-rail {
+.dss886-dsh-usage-rail {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -93,22 +93,22 @@ const STYLESHEET = `
   user-select: none;
 }
 
-.dsh-usage-rail:hover {
+.dss886-dsh-usage-rail:hover {
   background: var(--dsw-alias-interactive-bg-hover);
 }
 
-.dsh-usage-rail svg {
+.dss886-dsh-usage-rail svg {
   display: block;
 }
 
 /* The rail keeps a warning affordance even though it shows no number. */
-.dsh-usage-rail[data-low='true'] {
+.dss886-dsh-usage-rail[data-low='true'] {
   color: var(--dsw-alias-state-error-primary);
 }
 
 /* ── popover: same skin as the composer's stat dialog ────────────────────── */
 /* Placement (left/top/visibility) is the one value JavaScript supplies. */
-.dsh-usage-panel {
+.dss886-dsh-usage-panel {
   position: fixed;
   z-index: 1100;
   box-sizing: border-box;
@@ -125,7 +125,7 @@ const STYLESHEET = `
   user-select: none;
 }
 
-.dsh-usage-title {
+.dss886-dsh-usage-title {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -136,7 +136,7 @@ const STYLESHEET = `
 }
 
 /* The heading is a button: it opens the official usage page. */
-.dsh-usage-title-open {
+.dss886-dsh-usage-title-open {
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
@@ -152,29 +152,29 @@ const STYLESHEET = `
   text-align: left;
 }
 
-.dsh-usage-title-open svg {
+.dss886-dsh-usage-title-open svg {
   width: 14px;
   height: 14px;
 }
 
-.dsh-usage-title-kind {
+.dss886-dsh-usage-title-kind {
   display: flex;
   font-weight: 500;
   align-items: center;
   gap: 6px;
 }
 
-.dsh-usage-title-value {
+.dss886-dsh-usage-title-value {
   font-variant-numeric: tabular-nums;
 }
 
-.dsh-usage-rule {
+.dss886-dsh-usage-rule {
   margin-bottom: 10px;
   border-top: 0.5px solid var(--dsw-alias-border-l2, #e0e0e0);
 }
 
 /* Two-column detail rows: label left, amount right. */
-.dsh-usage-details {
+.dss886-dsh-usage-details {
   display: grid;
   grid-template-columns: minmax(88px, auto) minmax(0, 1fr);
   gap: 6px 16px;
@@ -182,13 +182,13 @@ const STYLESHEET = `
   color: var(--dsw-alias-label-tertiary, #9aa0a6);
 }
 
-.dsh-usage-details dt,
-.dsh-usage-details dd {
+.dss886-dsh-usage-details dt,
+.dss886-dsh-usage-details dd {
   min-width: 0;
   margin: 0;
 }
 
-.dsh-usage-details dd {
+.dss886-dsh-usage-details dd {
   color: var(--dsw-alias-label-secondary, #8a8f98);
   font-variant-numeric: tabular-nums;
   text-align: right;
@@ -196,13 +196,13 @@ const STYLESHEET = `
 `
 
 window.__ModuleLoader__.load({
-  id: 'dsh-usage',
+  id: '@dss886/dsh-usage',
   factory(require) {
     const React = require('react')
     const ReactDom = require('react-dom')
     const h = React.createElement
 
-    const API = '/dsh-usage/api/usage'
+    const API = '/dss886-dsh-usage/api/usage'
     const DASHBOARD_URL = 'https://platform.deepseek.com/usage'
     const REFRESH_MS = 60_000
     /** Viewport margin kept by the placement clamp (the Menu portal margin). */
@@ -210,7 +210,7 @@ window.__ModuleLoader__.load({
     /** Distance between the trigger's top edge and the panel's bottom. */
     const PANEL_GAP = 8
 
-    const styles = h('style', { key: 'dsh-usage-style', dangerouslySetInnerHTML: { __html: STYLESHEET } })
+    const styles = h('style', { key: 'dss886-dsh-usage-style', dangerouslySetInnerHTML: { __html: STYLESHEET } })
 
     /**
      * `IconDatabaseOutline16` from the harness icon set — the same glyph the
@@ -411,26 +411,26 @@ window.__ModuleLoader__.load({
         ? ReactDom.createPortal(
             h('div', {
               ref: panelRef,
-              className: 'dsh-usage-panel',
+              className: 'dss886-dsh-usage-panel',
               role: 'dialog',
               'aria-label': 'DeepSeek 用量',
               style: pos === null
                 ? { left: 0, top: 0, visibility: 'hidden' }
                 : { left: pos.left, top: pos.top },
             },
-              h('div', { className: 'dsh-usage-title' },
+              h('div', { className: 'dss886-dsh-usage-title' },
                 h('button', {
                   type: 'button',
-                  className: 'dsh-usage-title-open',
+                  className: 'dss886-dsh-usage-title-open',
                   'data-low': low ? 'true' : undefined,
                   onClick: openDashboard,
                   title: '在浏览器打开 ' + DASHBOARD_URL,
                 },
-                  h('span', { className: 'dsh-usage-title-kind' }, TOKEN_ICON, label),
-                  h('span', { className: 'dsh-usage-title-value' }, value)),
+                  h('span', { className: 'dss886-dsh-usage-title-kind' }, TOKEN_ICON, label),
+                  h('span', { className: 'dss886-dsh-usage-title-value' }, value)),
                 failed ? h('span', null, '刷新失败') : null),
-              h('div', { className: 'dsh-usage-rule', 'aria-hidden': true }),
-              h('dl', { className: 'dsh-usage-details' },
+              h('div', { className: 'dss886-dsh-usage-rule', 'aria-hidden': true }),
+              h('dl', { className: 'dss886-dsh-usage-details' },
                 h('dt', null, '今日Token用量'),
                 h('dd', null, fmtTokens(usage.today)),
                 h('dt', null, '今日缓存命中率'),
@@ -446,7 +446,7 @@ window.__ModuleLoader__.load({
           h('button', {
             ref: triggerRef,
             type: 'button',
-            className: 'dsh-usage-rail',
+            className: 'dss886-dsh-usage-rail',
             'data-low': low ? 'true' : undefined,
             'aria-haspopup': 'dialog',
             'aria-expanded': open,
@@ -463,15 +463,15 @@ window.__ModuleLoader__.load({
         h('button', {
           ref: triggerRef,
           type: 'button',
-          className: 'dsh-usage-card',
+          className: 'dss886-dsh-usage-card',
           'data-low': low ? 'true' : undefined,
           'aria-haspopup': 'dialog',
           'aria-expanded': open,
           onClick: function () { setOpen(!open) },
           title: label + ' - ' + value,
         },
-          h('span', { className: 'dsh-usage-card-label' }, TOKEN_ICON, label),
-          h('span', { className: 'dsh-usage-card-value' }, value)),
+          h('span', { className: 'dss886-dsh-usage-card-label' }, TOKEN_ICON, label),
+          h('span', { className: 'dss886-dsh-usage-card-value' }, value)),
         dialog)
     }
 
@@ -480,7 +480,7 @@ window.__ModuleLoader__.load({
       apply(ctx) {
         ctx.slots.inject('sidebar.footer.action', () => ctx.slots.register({
           name: 'sidebar.footer.action',
-          id: 'dsh-usage',
+          id: 'dss886-dsh-usage',
           order: 10,
           label: 'DeepSeek 用量',
         }, DeepSeekUsage))

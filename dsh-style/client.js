@@ -1,4 +1,4 @@
-// dsh-style — client half.
+// dss886-dsh-style — client half.
 //
 // The whole plugin is one document-level stylesheet: a 0.15s ease transition on
 // the background of every hoverable element, so a hover that recolors a button,
@@ -14,7 +14,7 @@
 //               class-name pattern breaks on the next restyle.
 //   TRANSITION  the declaration itself. v1 asks for `background 0.15s ease`.
 //
-// TRACE_LABEL stamps `<html data-dsh-style="…">` and `window.__DSH_STYLE__` so a
+// TRACE_LABEL stamps `<html data-dss886-dsh-style="…">` and `window.__DSS886_DSH_STYLE__` so a
 // running page can be asked what it installed without opening devtools.
 //
 // Everything is installed through `ctx.effect`, so disabling the plugin row
@@ -22,7 +22,7 @@
 // its mount.
 
 /** Owner of the installed stylesheet; also the diagnostic key on `window`. */
-const TRACE_LABEL = 'dsh-style'
+const TRACE_LABEL = 'dss886-dsh-style'
 
 /**
  * Elements whose hover recolors their background: buttons and button-shaped
@@ -80,7 +80,7 @@ function stylesheet(mark) {
 }
 
 window.__ModuleLoader__.load({
-  id: 'dsh-style',
+  id: '@dss886/dsh-style',
   factory() {
     const SOURCE = stylesheet(TRACE_LABEL)
 
@@ -91,12 +91,12 @@ window.__ModuleLoader__.load({
     function install() {
       const style = document.createElement('style')
       style.id = TRACE_LABEL
-      style.setAttribute('data-dsh-style', TRACE_LABEL)
+      style.setAttribute('data-dss886-dsh-style', TRACE_LABEL)
       style.textContent = SOURCE
       document.head.appendChild(style)
 
       const root = document.documentElement
-      root.setAttribute('data-dsh-style', TRACE_LABEL)
+      root.setAttribute('data-dss886-dsh-style', TRACE_LABEL)
 
       const diagnostics = {
         styleId: TRACE_LABEL,
@@ -119,12 +119,12 @@ window.__ModuleLoader__.load({
           return target === null ? null : getComputedStyle(target).transition
         },
       }
-      window.__DSH_STYLE__ = diagnostics
+      window.__DSS886_DSH_STYLE__ = diagnostics
 
       return function uninstall() {
         style.remove()
-        root.removeAttribute('data-dsh-style')
-        if (window.__DSH_STYLE__ === diagnostics) delete window.__DSH_STYLE__
+        root.removeAttribute('data-dss886-dsh-style')
+        if (window.__DSS886_DSH_STYLE__ === diagnostics) delete window.__DSS886_DSH_STYLE__
       }
     }
 
