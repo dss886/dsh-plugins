@@ -73,7 +73,7 @@ const STYLESHEET = `
 /* A balance under the low threshold recolors the amount (and the popover
    heading, which carries the same class). */
 .dss886-dsh-usage-card[data-low='true'] .dss886-dsh-usage-card-value,
-.dss886-dsh-usage-title-open[data-low='true'] {
+.dss886-dsh-usage-title-open[data-low='true'] .dss886-dsh-usage-title-value {
   color: var(--dsw-alias-state-error-primary);
 }
 
