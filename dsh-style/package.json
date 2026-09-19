@@ -1,0 +1,23 @@
+{
+  "name": "dsh-style",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Global style trims for the DSH Web UI — v1: a 0.15s ease background transition on every hoverable element",
+  "type": "module",
+  "main": "./index.js",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true
+    }
+  }
+}
