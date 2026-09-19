@@ -1,0 +1,5 @@
+# The dsh-usage bundle layer: one host row that serves the sidebar card's data
+# over a loopback-only route and meters this harness's token accounting.
+- insert:
+    - id: dsh-usage
+      name: dsh-usage

@@ -1,0 +1,25 @@
+{
+  "name": "dsh-usage",
+  "version": "0.1.0",
+  "private": true,
+  "description": "DeepSeek usage chip above the sidebar Settings row: balance, today's tokens, cache hit rate and estimated cost",
+  "type": "module",
+  "main": "./index.js",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": ["slots", "timer"],
+      "external": ["react-dom"]
+    }
+  }
+}
