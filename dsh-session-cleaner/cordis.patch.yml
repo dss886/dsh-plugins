@@ -1,0 +1,5 @@
+# The @dss886/dsh-session-cleaner bundle layer: one row that mounts the
+# startup retention pass and the General settings row.
+- insert:
+    - id: dss886-dsh-session-cleaner
+      name: '@dss886/dsh-session-cleaner'

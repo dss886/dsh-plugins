@@ -1,0 +1,27 @@
+{
+  "name": "@dss886/dsh-session-cleaner",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Deletes archived DSH sessions (with their subagent logs and projection-cache rows) after a configurable retention window, on the next startup.",
+  "type": "module",
+  "main": "./index.js",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "slots",
+        "locale"
+      ]
+    }
+  }
+}

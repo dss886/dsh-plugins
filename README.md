@@ -6,6 +6,7 @@
 | --- | --- | --- | --- |
 | [`dsh-usage/`](dsh-usage/) | `@dss886/dsh-usage` | `dss886-dsh-usage` | 侧边栏底部余额 / 用量卡片 + 浮窗 |
 | [`dsh-style/`](dsh-style/) | `@dss886/dsh-style` | `dss886-dsh-style` | 全局样式微调(悬停过渡) |
+| [`dsh-session-cleaner/`](dsh-session-cleaner/) | `@dss886/dsh-session-cleaner` | `dss886-dsh-session-cleaner` | 归档会话保留期到期后，下次启动自动永久删除 |
 
 目录名沿用短名(`dsh-usage/`),与包名解耦 —— 官方也是这么做的(`@deepseek-ai/dsh-base` 住在 `packages/bundle/base`)。
 
